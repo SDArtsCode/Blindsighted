@@ -84,7 +84,7 @@ Shader "Custom/Halftone" {
 
 			//get noise value
             float noiseValue = tex2D(_NoisePattern, currentCoords).r;
-			float halftoneValue = tex2D(_HalftonePattern, s.ScreenPos).r * noiseValue;
+			float halftoneValue = tex2D(_HalftonePattern, currentCoords).r * noiseValue;
 
 			halftoneValue = 1 - halftoneValue;
 
