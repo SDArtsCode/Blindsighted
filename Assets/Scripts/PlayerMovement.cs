@@ -12,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
+    bool pulsing = false;
+    [SerializeField] Light playerLight;
+    [SerializeField] float lerpUpSpeed;
+    [SerializeField] float lerpDownSpeed;
+    [SerializeField] float maxRange;
+    [SerializeField] float minRange;
     [SerializeField] float speed = 12f;
 
     Vector3 velocity;
@@ -31,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            pulsing = true;
+        }
 
 
         float x = Input.GetAxis("Horizontal");
@@ -48,5 +58,31 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controlls.Move(velocity * Time.deltaTime);
+
+        if (pulsing)
+        {
+            Pulse();
+        }
+    }
+
+    void Pulse()
+    {
+        bool switched = false;
+        float range = playerLight.range;
+        if (maxRange - range >= 0.1 && !switched)
+        {
+            range = Mathf.Lerp(range, maxRange, lerpUpSpeed);
+            switched = true;
+        }
+        else if(range - minRange >= 0.1 && switched)
+        {
+            range = Mathf.Lerp(range, minRange, lerpDownSpeed);
+        }
+        else
+        {
+            range = minRange;
+            pulsing = false;
+        }
+        playerLight.range = range;
     }
 }
