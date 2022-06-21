@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 2.5f;
     public Transform groundCheck;
-    public float groundRadius = 0.5f;
+    public float groundRadius = 0.75f;
     public LayerMask groundMask;
     bool isGrounded;
 
