@@ -248,10 +248,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlls: {fileID: 536547269}
-  gravity: -9.81
+  gravity: -14.2245
   jumpHeight: 2.5
   groundCheck: {fileID: 1181872797}
-  groundRadius: 0.5
+  groundRadius: 0.335
   groundMask:
     serializedVersion: 2
     m_Bits: 8
@@ -282,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536547267}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.08, y: 2.55, z: 5.62}
+  m_LocalPosition: {x: -4.43, y: 5.98, z: 5.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c97cb26b1aa80a449d278bad6961a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
+  mouseSensitivity: 160
   playerBody: {fileID: 536547270}
 --- !u!82 &963194230
 AudioSource:
@@ -400,7 +400,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c7288a4f1f921414f8b3f16bb532d22f, type: 3}
@@ -513,7 +513,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181872796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.255, z: 0}
+  m_LocalPosition: {x: 0, y: -1.335, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -548,7 +548,7 @@ Transform:
   m_GameObject: {fileID: 1687697577}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.8, z: 1}
+  m_LocalScale: {x: 1, y: 1.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 536547270}
@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 1381349787993748364}
   - component: {fileID: 7362690206349258579}
   - component: {fileID: 7698582233043485971}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,7 +767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6820557954053168759}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: mesh_environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,7 +783,7 @@ Transform:
   m_GameObject: {fileID: 6191514894697596109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.75, y: 2.25, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7698582233043485970}
