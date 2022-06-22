@@ -4,32 +4,37 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controlls;
-    public float gravity = -9.81f;
-    public float jumpHeight = 2.5f;
-    public Transform groundCheck;
-    public float groundRadius = 0.75f;
-    public LayerMask groundMask;
-    bool isGrounded;
-
-    bool pulsing = false;
-    [SerializeField] Light playerLight;
-    [SerializeField] float lerpUpSpeed;
-    [SerializeField] float lerpDownSpeed;
-    [SerializeField] float maxRange;
-    [SerializeField] float minRange;
-    [SerializeField] float speed = 12f;
+    private CharacterController controls;
+    private Animator anim;
+    [SerializeField] private float speed = 8;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float jumpHeight = 2.5f;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundRadius = 0.75f;
+    [SerializeField] private LayerMask groundMask;
+    private bool isGrounded;
 
     Vector3 velocity;
+    public static Vector3 playerPosition;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        controls = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            anim.SetTrigger("flash");
+        }
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundMask);
 
         if(isGrounded && velocity.y < 0)
@@ -37,52 +42,19 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            pulsing = true;
-        }
-
-
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 moveLocalTransform = transform.right * x + transform.forward * z;
-
-        controlls.Move(moveLocalTransform * speed * Time.deltaTime);
-
-        if(Input.GetButtonDown("Jump") && isGrounded == true)
+        if (Input.GetButtonDown("Jump") && isGrounded == true)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
+        Vector3 moveLocalTransform = transform.right * x + transform.forward * z;
+
+        controls.Move(moveLocalTransform * speed * Time.deltaTime);
+
         velocity.y += gravity * Time.deltaTime;
 
-        controlls.Move(velocity * Time.deltaTime);
+        controls.Move(velocity * Time.deltaTime);
 
-        if (pulsing)
-        {
-            Pulse();
-        }
-    }
-
-    void Pulse()
-    {
-        bool switched = false;
-        float range = playerLight.range;
-        if (maxRange - range >= 0.1 && !switched)
-        {
-            range = Mathf.Lerp(range, maxRange, lerpUpSpeed);
-            switched = true;
-        }
-        else if(range - minRange >= 0.1 && switched)
-        {
-            range = Mathf.Lerp(range, minRange, lerpDownSpeed);
-        }
-        else
-        {
-            range = minRange;
-            pulsing = false;
-        }
-        playerLight.range = range;
+        playerPosition = transform.position;
     }
 }
