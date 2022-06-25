@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] float damage;
     MeshRenderer mr;
     Rigidbody rb;
     ParticleSystem ps;
 
+    float damage;
+
     private void Start()
     {
+        damage = Gun.currentWeapon.damage;
+
         rb = GetComponent<Rigidbody>();
         ps = GetComponent<ParticleSystem>();
         mr = GetComponent<MeshRenderer>();

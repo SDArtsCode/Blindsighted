@@ -4,11 +4,31 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] float fireRate = 0.5f;
-    [SerializeField] float bulletForce = 100;
+    [SerializeField] private Weapon weapon;
+
+    public Weapon Weapon
+    {
+        get { return weapon; }
+        set
+        {
+            Debug.Log("Weapon changed to " + value.name);
+
+            Destroy(transform.GetChild(0));
+            Instantiate(value.prefab, gameObject.transform); 
+            weapon = value;
+            currentWeapon = value;
+
+            gunOrigin = GameObject.Find("GunOrigin").transform;
+            muzzleFlash = GetComponentInChildren<ParticleSystem>();
+        }
+    }
+
+
+
+    public static Weapon currentWeapon;
     [SerializeField] float travelTime = 3.0f;
     [SerializeField] LayerMask layerMask;
-    [SerializeField] Transform gunOrigin;
+    Transform gunOrigin;
 
     [SerializeField] Camera fpsCam;
 
@@ -17,11 +37,9 @@ public class Gun : MonoBehaviour
     private Animator anim;
 
     [SerializeField] GameObject bullet;
-    [SerializeField] ParticleSystem muzzleFlash;
+    ParticleSystem muzzleFlash;
     [SerializeField] Animator flashAnim;
 
-    [SerializeField] int reloadDelay;
-    [SerializeField] int maxAmmoInGun;
     int ammoInGun;
     bool isReloading = false;
 
@@ -31,13 +49,18 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
+        currentWeapon = weapon;
+
         ammoInventory = maxAmmoInventory;
 
-        int ammo = Mathf.Clamp(maxAmmoInGun, 0, ammoInventory);
+        int ammo = Mathf.Clamp(currentWeapon.magSize, 0, ammoInventory);
         ammoInGun += ammo;
         ammoInventory -= ammo;
 
         anim = GetComponent<Animator>();
+        muzzleFlash = GetComponentInChildren<ParticleSystem>();
+        gunOrigin = GameObject.Find("GunOrigin").transform;
+
     }
 
     void Update()
@@ -46,7 +69,7 @@ public class Gun : MonoBehaviour
         {
             if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
             {
-                nextTimeToFire = Time.time + 1f / fireRate;
+                nextTimeToFire = Time.time + 1f / currentWeapon.fireRate;
                 Shoot();
             }
             else if(Time.time >= nextTimeToFire && ammoInGun <= 0 && !isReloading)
@@ -63,7 +86,7 @@ public class Gun : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if(ammoInGun < maxAmmoInGun)
+            if(ammoInGun < currentWeapon.magSize && ammoInventory > 0)
             {
                 Reload();
             }
@@ -77,7 +100,7 @@ public class Gun : MonoBehaviour
 
         muzzleFlash.Play();
         flashAnim.SetTrigger("Flash");
-        AudioManager.instance.Play("GunShoot");
+        AudioManager.instance.Play(currentWeapon.soundEffect);
 
         Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
@@ -92,7 +115,7 @@ public class Gun : MonoBehaviour
         }
 
         var b = Instantiate(bullet, gunOrigin.transform.position, Quaternion.identity);
-        b.GetComponent<Rigidbody>().velocity = Direction(destination, gunOrigin.transform.position) * bulletForce;
+        b.GetComponent<Rigidbody>().velocity = Direction(destination, gunOrigin.transform.position) * currentWeapon.bulletSpeed;
         Destroy(b, travelTime);
 
     }
@@ -107,6 +130,7 @@ public class Gun : MonoBehaviour
         isReloading = true;
 
         anim.SetTrigger("Reload");
+        anim.speed = currentWeapon.reloadMultiplier;
         AudioManager.instance.Play("GunReload");   
     }
 
@@ -114,7 +138,7 @@ public class Gun : MonoBehaviour
     {
         isReloading = false;
 
-        int reloadAmount = maxAmmoInGun - ammoInGun;
+        int reloadAmount = currentWeapon.magSize - ammoInGun;
         int reloaded = Mathf.Clamp(reloadAmount, 0, ammoInventory);
         ammoInGun += reloaded;
         ammoInventory -= reloaded;
@@ -129,6 +153,4 @@ public class Gun : MonoBehaviour
     {
         return (from-to).normalized;
     }
-
- 
 }

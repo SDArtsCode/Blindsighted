@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  ammoDropChance: 100
+  ammoDrop: {fileID: 2156188041625940306, guid: 5e65e6b790d397a4b9e5a9411390f30e, type: 3}
 --- !u!1 &509128080575376837
 GameObject:
   m_ObjectHideFlags: 0
