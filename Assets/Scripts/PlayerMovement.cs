@@ -17,23 +17,16 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     public static Vector3 playerPosition;
 
-    // Start is called before the first frame update
     void Start()
     {
         controls = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            anim.SetTrigger("flash");
-        }
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundMask);
 
@@ -53,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
-        controls.Move(velocity * Time.deltaTime);
+        //controls.Move(velocity * Time.deltaTime);
 
         playerPosition = transform.position;
     }
