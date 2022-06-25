@@ -8,27 +8,28 @@ public class MouseVision : MonoBehaviour
 
 
     float rotateX = 0f;
-    public Transform playerBody;
+    float rotateY = 0f;
+
+    public Transform camPivot;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-         
+        float mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        rotateY += mouseX;
         rotateX -= mouseY;
         rotateX = Mathf.Clamp(rotateX, -90f, 90f);
 
 
-        transform.localRotation = Quaternion.Euler(rotateX, 0f, 0f);
-
-
-        playerBody.Rotate(Vector3.up * mouseX);
-       
+        camPivot.transform.localRotation = Quaternion.Euler(rotateX, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(0f, rotateY, 0f);
     }
 }
