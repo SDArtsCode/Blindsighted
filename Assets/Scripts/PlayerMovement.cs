@@ -46,8 +46,11 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
-        //controls.Move(velocity * Time.deltaTime);
+        controls.Move(velocity * Time.deltaTime);
 
         playerPosition = transform.position;
+
+  
+        anim.SetBool("isWalking", x != 0 || z != 0);
     }
 }
