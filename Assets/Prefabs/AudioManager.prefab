@@ -66,3 +66,10 @@ MonoBehaviour:
     pitch: 0.78
     loop: 0
     audioMixer: {fileID: 8470423585785953401, guid: ace0df12abd7815468c9249326aefd97, type: 2}
+  - source: {fileID: 0}
+    name: FastGunShoot
+    clip: {fileID: 8300000, guid: 9a489eddafc31cd4897159c7c16de9b3, type: 3}
+    volume: 0.305
+    pitch: 1.19
+    loop: 0
+    audioMixer: {fileID: 8470423585785953401, guid: ace0df12abd7815468c9249326aefd97, type: 2}

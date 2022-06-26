@@ -10,7 +10,6 @@ public class EnemyHealth : Health
     {
         if(Random.Range(0, 100) < ammoDropChance)
         {
-            Debug.Log("Ammo dropped");
             Instantiate(ammoDrop, parent.transform.position, Quaternion.identity);
         }
 

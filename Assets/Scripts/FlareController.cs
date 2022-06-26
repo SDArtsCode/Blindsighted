@@ -25,8 +25,6 @@ public class FlareController : MonoBehaviour
 
     void LaunchFlare()
     {
-        Debug.Log("Flare launched");
-
         currentTime = 0;
 
         var flare = Instantiate(flarePrefab, flareOrigin.transform.position, Quaternion.identity);

@@ -6,18 +6,18 @@ public class Flare : MonoBehaviour
     [SerializeField] float brightTime;
     [SerializeField] float fadeTime;
     [SerializeField] float decreaseSpeed;
-    private Light light;
+    private Light flareLight;
 
     private void Start()
     {
-        light = GetComponentInChildren<Light>();
+        flareLight = GetComponentInChildren<Light>();
     }
 
     private void Update()
     {
         if (brightTime < 0)
         {
-            light.range = Mathf.Lerp(light.range, 0, decreaseSpeed / 100);
+            flareLight.range = Mathf.Lerp(flareLight.range, 0, decreaseSpeed / 100);
 
             if (fadeTime < 0)
             {
