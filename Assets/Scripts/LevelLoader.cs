@@ -5,35 +5,75 @@ using UnityEngine;
 public class LevelLoader : MonoBehaviour
 {
     public static LevelLoader instance;
+    public static int transitionIndex;
 
-    public Animator transition;
-
-    public float transitionTime;
+    public Animator whiteToBlack;
+    public Animator blackToWhite;
 
     private void Awake()
     {
         instance = this;
+
+        SetTransition(transitionIndex);
     }
 
-    private void Update()
+    public void LoadLevel(int transitionIndex, int sceneIndex)
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        SetTransition(transitionIndex);
+        if(transitionIndex == 0)
         {
-            LoadNextLevel();
+            StartCoroutine(WTBLevelTransition(sceneIndex));
+        }
+        else if(transitionIndex == 1)
+        {
+            StartCoroutine(BTWLevelTransition(sceneIndex));
         }
     }
 
-    public void LoadNextLevel()
+    public void LoadLevel(int transitionIndex)
     {
-        StartCoroutine(LevelTransition(SceneManager.GetActiveScene().buildIndex + 1));
+        SetTransition(transitionIndex);
+        if (transitionIndex == 0)
+        {
+            StartCoroutine(WTBLevelTransition(SceneManager.GetActiveScene().buildIndex + 1));
+        }
+        else if (transitionIndex == 1)
+        {
+            StartCoroutine(BTWLevelTransition(SceneManager.GetActiveScene().buildIndex + 1));
+        }
     }
 
-    IEnumerator LevelTransition(int levelIndex)
-    {
-        transition.SetTrigger("Start");
 
-        yield return new WaitForSeconds(transitionTime);
+    IEnumerator WTBLevelTransition(int levelIndex)
+    {
+        whiteToBlack.SetTrigger("Start");
+
+        yield return new WaitForSeconds(whiteToBlack.GetCurrentAnimatorStateInfo(0).length + 0.25f);
 
         SceneManager.LoadScene(levelIndex);
+    }
+
+    IEnumerator BTWLevelTransition(int levelIndex)
+    {
+        blackToWhite.SetTrigger("Start");
+
+        yield return new WaitForSeconds(blackToWhite.GetCurrentAnimatorStateInfo(0).length + 0.25f);
+
+        SceneManager.LoadScene(levelIndex);
+    }
+
+    private void SetTransition(int transitionIndex)
+    {
+        if(transitionIndex == 0)
+        {
+            whiteToBlack.gameObject.SetActive(true);
+            blackToWhite.gameObject.SetActive(false);
+        }
+        else if(transitionIndex == 1)
+        {
+            whiteToBlack.gameObject.SetActive(false);
+            blackToWhite.gameObject.SetActive(true);
+        }
+        LevelLoader.transitionIndex = transitionIndex;
     }
 }

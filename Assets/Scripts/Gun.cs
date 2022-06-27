@@ -35,12 +35,16 @@ public class Gun : MonoBehaviour
 
         anim = GetComponent<Animator>();
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
-        gunOrigin = GameObject.Find("GunOrigin").transform;
-
+        gunOrigin = GameObject.FindWithTag("GunOrigin").transform;
     }
 
     void Update()
     {
+        if(gunOrigin == null)
+        {
+            gunOrigin = GameObject.FindWithTag("GunOrigin").transform;
+        }
+
         if (Input.GetButton("Fire1"))
         {
             if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
