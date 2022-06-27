@@ -1,17 +1,39 @@
+using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
+    public static LevelLoader instance;
+
     public Animator transition;
 
-    public void LoadNextLevel(string sceneToLoad)
+    public float transitionTime;
+
+    private void Awake()
     {
-        SceneManager.LoadScene(sceneToLoad);
+        instance = this;
     }
 
-    public void LoadNextLevel(int buildIndex)
+    private void Update()
     {
-        SceneManager.LoadScene(buildIndex);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            LoadNextLevel();
+        }
+    }
+
+    public void LoadNextLevel()
+    {
+        StartCoroutine(LevelTransition(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+
+    IEnumerator LevelTransition(int levelIndex)
+    {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(levelIndex);
     }
 }
