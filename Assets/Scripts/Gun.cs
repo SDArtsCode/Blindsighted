@@ -5,57 +5,37 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     [SerializeField] private Weapon weapon;
-
-    public Weapon Weapon
-    {
-        get { return weapon; }
-        set
-        {
-            Debug.Log("Weapon changed to " + value.name);
-
-            Destroy(transform.GetChild(0));
-            Instantiate(value.prefab, gameObject.transform); 
-            weapon = value;
-            currentWeapon = value;
-
-            gunOrigin = GameObject.Find("GunOrigin").transform;
-            muzzleFlash = GetComponentInChildren<ParticleSystem>();
-        }
-    }
-
-
-
     public static Weapon currentWeapon;
-    [SerializeField] float travelTime = 3.0f;
-    [SerializeField] LayerMask layerMask;
-    Transform gunOrigin;
-
-    [SerializeField] Camera fpsCam;
-
-    private Vector3 destination;
-    private float nextTimeToFire = 0f;
-    private Animator anim;
-
-    [SerializeField] GameObject bullet;
-    ParticleSystem muzzleFlash;
-    [SerializeField] Animator flashAnim;
-
-    int ammoInGun;
-    bool isReloading = false;
 
     [SerializeField] int maxAmmoInventory;
+    [SerializeField] GameObject bullet;
+    [SerializeField] float travelTime = 3.0f;
+    [SerializeField] LayerMask layerMask;
+
+    Transform gunOrigin;
+    private Vector3 destination;
+    private float nextTimeToFire = 0f;
+    int ammoInGun;
+    bool isReloading = false;
     int ammoInventory;
+
+    ParticleSystem muzzleFlash;
+    private Animator anim;
+
+    [SerializeField] Camera fpsCam;
+    [SerializeField] Animator flashAnim;
 
 
     private void Start()
     {
         currentWeapon = weapon;
-
         ammoInventory = maxAmmoInventory;
 
         int ammo = Mathf.Clamp(currentWeapon.magSize, 0, ammoInventory);
         ammoInGun += ammo;
         ammoInventory -= ammo;
+
+        Instantiate(currentWeapon.prefab, gameObject.transform);
 
         anim = GetComponent<Animator>();
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
@@ -65,7 +45,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
             {
@@ -84,9 +64,9 @@ public class Gun : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) && !isReloading)
         {
-            if(ammoInGun < currentWeapon.magSize && ammoInventory > 0)
+            if (ammoInGun < currentWeapon.magSize && ammoInventory > 0)
             {
                 Reload();
             }
@@ -118,11 +98,6 @@ public class Gun : MonoBehaviour
         b.GetComponent<Rigidbody>().velocity = Direction(destination, gunOrigin.transform.position) * currentWeapon.bulletSpeed;
         Destroy(b, travelTime);
 
-    }
-
-    IEnumerator waitforShot()
-    {
-       yield return new WaitForSeconds(.75f);
     }
 
     public void Reload()

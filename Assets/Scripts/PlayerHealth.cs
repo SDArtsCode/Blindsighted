@@ -6,6 +6,6 @@ public class PlayerHealth : Health
 {
     public override void Death()
     {
-        Debug.Log("Player Dead");
+        LevelController.instance.ReloadLevel();
     }
 }

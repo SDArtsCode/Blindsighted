@@ -18,6 +18,6 @@ MonoBehaviour:
   bulletSpeed: 70
   reloadMultiplier: 2
   magSize: 6
-  soundEffect: GunShoot
+  soundEffect: MegaGunShoot
   icon: {fileID: 0}
   prefab: {fileID: 3881555163200178389, guid: 60efbecdadc387b4a832fae3a99590d0, type: 3}
