@@ -17,7 +17,6 @@ public class Gun : MonoBehaviour
     private float nextTimeToFire = 0f;
     int ammoInGun;
     bool isReloading = false;
-    int ammoInventory;
 
     ParticleSystem muzzleFlash;
     private Animator anim;
@@ -29,11 +28,8 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         currentWeapon = weapon;
-        ammoInventory = maxAmmoInventory;
 
-        int ammo = Mathf.Clamp(currentWeapon.magSize, 0, ammoInventory);
-        ammoInGun += ammo;
-        ammoInventory -= ammo;
+        ammoInGun = currentWeapon.magSize;
 
         Instantiate(currentWeapon.prefab, gameObject.transform);
 
@@ -54,19 +50,12 @@ public class Gun : MonoBehaviour
             }
             else if(Time.time >= nextTimeToFire && ammoInGun <= 0 && !isReloading)
             {
-                if(ammoInventory > 0)
-                {
-                    Reload();
-                }
-                else
-                {
-                    //play empty sfx
-                }
+                Reload();
             }
         }
         if (Input.GetKey(KeyCode.R) && !isReloading)
         {
-            if (ammoInGun < currentWeapon.magSize && ammoInventory > 0)
+            if (ammoInGun < currentWeapon.magSize)
             {
                 Reload();
             }
@@ -113,15 +102,7 @@ public class Gun : MonoBehaviour
     {
         isReloading = false;
 
-        int reloadAmount = currentWeapon.magSize - ammoInGun;
-        int reloaded = Mathf.Clamp(reloadAmount, 0, ammoInventory);
-        ammoInGun += reloaded;
-        ammoInventory -= reloaded;
-    }
-
-    public void AddAmmo(int amount)
-    {
-        ammoInventory = Mathf.Clamp(ammoInventory + amount, 0, maxAmmoInventory);
+        ammoInGun = currentWeapon.magSize;
     }
 
     Vector3 Direction(Vector3 from, Vector3 to)
