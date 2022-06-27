@@ -17,13 +17,10 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Collsion with: " + other.gameObject.name + " detected");
-
+    { 
         if (other.gameObject.tag == "Player")
         {
-            other.GetComponent<PlayerHealth>().TakeDamage(50);
-            Debug.Log("Player hit");
+            other.GetComponent<PlayerHealth>().TakeDamage(meleeDamage);
         }
     }
 }
