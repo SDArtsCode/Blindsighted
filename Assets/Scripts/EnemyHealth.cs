@@ -8,10 +8,12 @@ public class EnemyHealth : Health
 
     public override void Death()
     {
+        /*
         if(Random.Range(0, 100) < ammoDropChance)
         {
             Instantiate(ammoDrop, parent.transform.position, Quaternion.identity);
         }
+        */
 
         Destroy(parent);
     }
