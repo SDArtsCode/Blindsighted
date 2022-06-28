@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70637d57fe1833f4ea57dac4ed5c81a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: 5eb5bad2da871be47b6a8bb4c5b43a3f, type: 2}
+  settings: {fileID: 11400000, guid: ae8a591e3f77af342b42293d906d1920, type: 2}
   maxAmmoInventory: 300
   bullet: {fileID: 21694218827060889, guid: e91f4334e88c53f43a8788afa48e292d, type: 3}
   travelTime: 3

@@ -20,14 +20,29 @@ public class LevelLoader : MonoBehaviour
     public void LoadLevel(int transitionIndex, int sceneIndex)
     {
         SetTransition(transitionIndex);
-        if(transitionIndex == 0)
+        if(sceneIndex > 0)
         {
-            StartCoroutine(WTBLevelTransition(sceneIndex));
+            if (transitionIndex == 0)
+            {
+                StartCoroutine(WTBLevelTransition(sceneIndex));
+            }
+            else if (transitionIndex == 1)
+            {
+                StartCoroutine(BTWLevelTransition(sceneIndex));
+            }
         }
-        else if(transitionIndex == 1)
+        else
         {
-            StartCoroutine(BTWLevelTransition(sceneIndex));
+            if (transitionIndex == 0)
+            {
+                StartCoroutine(WTBLevelTransition(SceneManager.GetActiveScene().buildIndex));
+            }
+            else if (transitionIndex == 1)
+            {
+                StartCoroutine(BTWLevelTransition(SceneManager.GetActiveScene().buildIndex));
+            }
         }
+        
     }
 
     public void LoadLevel(int transitionIndex)

@@ -11,7 +11,12 @@ public class MouseVision : MonoBehaviour
     float rotateY = 0f;
 
     public Transform camPivot;
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        PlayerHealth.onPlayerDeath += OnPlayerDeath;
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -31,5 +36,10 @@ public class MouseVision : MonoBehaviour
 
         camPivot.transform.localRotation = Quaternion.Euler(rotateX, 0f, 0f);
         transform.localRotation = Quaternion.Euler(0f, rotateY, 0f);
+    }
+
+    void OnPlayerDeath()
+    {
+        mouseSensitivity /= 6f;
     }
 }

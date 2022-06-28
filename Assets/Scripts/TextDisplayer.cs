@@ -4,44 +4,66 @@ using UnityEngine;
 
 public class TextDisplayer : MonoBehaviour
 {
+    [SerializeField] bool intro;
     [SerializeField] TextMeshProUGUI textDisplay;
-    [SerializeField] string[] text;
+    [SerializeField] Dialogue[] text;
     [SerializeField] float textDelay = 0.15f;
+    [SerializeField] float sentenceDelay = 1.0f;
 
     [SerializeField] float startDelay = 0.3f;
     [SerializeField] float endDelay = 0.3f;
     float currentTime = 0;
     bool started;
 
-    [SerializeField] int loopIndex;
+    [SerializeField] Settings settings;
 
     private void Update()
     {
         if(startDelay < currentTime && !started)
         {
-            StartCoroutine(DisplayText(text[loopIndex]));
+            StartCoroutine(DisplayText(text[settings.loop]));
             started = true;
         }
 
         currentTime += Time.deltaTime;
     }
 
-
-    IEnumerator DisplayText(string text)
+    IEnumerator DisplayText(Dialogue text)
     {
-        if(text.Length == 0)
+        for (int s = 0; s < text.sentences.Length; s++)
         {
-            yield return new WaitForSeconds(endDelay);
+            textDisplay.text = "";
 
-            LevelLoader.instance.LoadLevel(0);
+            for (int i = 0; i < text.sentences[s].Length; i++)
+            {
+                textDisplay.text += text.sentences[s][i];
 
-            yield break;
+                yield return new WaitForSeconds(textDelay);
+            }
+
+            yield return new WaitForSeconds(sentenceDelay);
         }
 
-        yield return new WaitForSeconds(textDelay);
+        yield return new WaitForSeconds(endDelay);
 
-        textDisplay.text += text[0];
+        if (!intro)
+        {
+            if(settings.loop >= 4)
+            {
+                LevelLoader.instance.LoadLevel(0, 0);
+            }
+            else
+            {
+                LevelLoader.instance.LoadLevel(0);
+            }
+            
+        }
+        else
+        {
+            LevelLoader.instance.LoadLevel(0);
+        }
+        
 
-        StartCoroutine(DisplayText(text.Remove(0,1)));
+        yield break;
     }
 }

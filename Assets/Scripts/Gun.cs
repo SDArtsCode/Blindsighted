@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] private Weapon weapon;
+    [SerializeField] Settings settings;
     public static Weapon currentWeapon;
 
     [SerializeField] int maxAmmoInventory;
@@ -24,10 +24,16 @@ public class Gun : MonoBehaviour
     [SerializeField] Camera fpsCam;
     [SerializeField] Animator flashAnim;
 
+    bool dead;
+
+    private void Awake()
+    {
+        PlayerHealth.onPlayerDeath += OnPlayerDeath;
+    }
 
     private void Start()
     {
-        currentWeapon = weapon;
+        currentWeapon = settings.weapon;
 
         ammoInGun = currentWeapon.magSize;
 
@@ -45,23 +51,26 @@ public class Gun : MonoBehaviour
             gunOrigin = GameObject.FindWithTag("GunOrigin").transform;
         }
 
-        if (Input.GetButton("Fire1"))
+        if (!dead)
         {
-            if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
+            if (Input.GetButton("Fire1"))
             {
-                nextTimeToFire = Time.time + 1f / currentWeapon.fireRate;
-                Shoot();
+                if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
+                {
+                    nextTimeToFire = Time.time + 1f / currentWeapon.fireRate;
+                    Shoot();
+                }
+                else if (Time.time >= nextTimeToFire && ammoInGun <= 0 && !isReloading)
+                {
+                    Reload();
+                }
             }
-            else if(Time.time >= nextTimeToFire && ammoInGun <= 0 && !isReloading)
+            if (Input.GetKey(KeyCode.R) && !isReloading)
             {
-                Reload();
-            }
-        }
-        if (Input.GetKey(KeyCode.R) && !isReloading)
-        {
-            if (ammoInGun < currentWeapon.magSize)
-            {
-                Reload();
+                if (ammoInGun < currentWeapon.magSize)
+                {
+                    Reload();
+                }
             }
         }
     }
@@ -112,5 +121,10 @@ public class Gun : MonoBehaviour
     Vector3 Direction(Vector3 from, Vector3 to)
     {
         return (from-to).normalized;
+    }
+
+    void OnPlayerDeath()
+    {
+        dead = true;
     }
 }

@@ -13,9 +13,16 @@ public class FlareController : MonoBehaviour
 
     [SerializeField] Transform fpsCam;
 
+    private bool dead;
+
+    private void Awake()
+    {
+        PlayerHealth.onPlayerDeath += OnPlayerDeath;
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1) && flareInventory > 0 && currentTime > flareDelay)
+        if (Input.GetMouseButtonDown(1) && flareInventory > 0 && currentTime > flareDelay && !dead)
         {
             LaunchFlare();
         }
@@ -31,5 +38,10 @@ public class FlareController : MonoBehaviour
         Rigidbody flareRB = flare.GetComponent<Rigidbody>();
         flareRB.velocity = fpsCam.forward * launchVelocity * 10;
         flareRB.angularVelocity = new Vector3(launchAngularVelocity, launchAngularVelocity / 3, 0);
+    }
+
+    void OnPlayerDeath()
+    {
+        dead = true;
     }
 }

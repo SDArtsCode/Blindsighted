@@ -31,8 +31,8 @@ public class LevelController : MonoBehaviour
 
         if(currentEnemies != null)
         {
-            Destroy(currentEnemies.gameObject);
-            currentEnemies = Instantiate(enemyPrefab[loopIndex], new Vector3(0, 0, 0), Quaternion.identity);
+            //Destroy(currentEnemies.gameObject);
+            //currentEnemies = Instantiate(enemyPrefab[loopIndex], new Vector3(0, 0, 0), Quaternion.identity);
         }
     }
 

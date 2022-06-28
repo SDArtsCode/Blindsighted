@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed2e7644bab739b488d5176ffeafebdc, type: 3}
-  m_Name: MegaRevolver
+  m_Name: MachineGun
   m_EditorClassIdentifier: 
-  weaponName: Mega Revolver
-  damage: 100
-  fireRate: 0.8
-  bulletSpeed: 70
-  reloadMultiplier: 0.5
-  magSize: 6
-  soundEffect: MegaGunShoot
+  weaponName: Machine Gun
+  damage: 20
+  fireRate: 4
+  bulletSpeed: 90
+  reloadMultiplier: 0.4
+  magSize: 30
+  soundEffect: FastGunShoot
   icon: {fileID: 0}
-  prefab: {fileID: 3881555163200178389, guid: 60efbecdadc387b4a832fae3a99590d0, type: 3}
+  prefab: {fileID: 6676932196028743820, guid: 18d0fe6d9259fab49a270f5114365471, type: 3}
