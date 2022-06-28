@@ -16,7 +16,7 @@ MonoBehaviour:
   damage: 100
   fireRate: 0.8
   bulletSpeed: 70
-  reloadMultiplier: 2
+  reloadMultiplier: 0.5
   magSize: 6
   soundEffect: MegaGunShoot
   icon: {fileID: 0}

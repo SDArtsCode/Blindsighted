@@ -26,7 +26,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: e6ff98dfbbf896442b588cf40e3252ac
   m_EffectName: Attenuation
   m_MixLevel: 3b6b46c07ad26d54a98f825b24f6c764
@@ -40,7 +40,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: fcdbb0a03c7543b4bae7565b00e05ee7
   m_EffectName: Attenuation
   m_MixLevel: 204b616e97173094c98a3e01086bc724
@@ -111,7 +111,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: 168f3356aff44744fa56677e1d348e8c
   m_EffectName: Attenuation
   m_MixLevel: 787c752506ec3cb49abe6f7a0593ed1d
@@ -146,7 +146,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: 7862d421cad94e14b9680af9c1f45f00
   m_EffectName: Lowpass
   m_MixLevel: 47cbd7dc0fb15364a98598e86f701d74
@@ -183,7 +183,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: 64431a89bdc21dc42a8cb7e162b0b6b8
   m_EffectName: Attenuation
   m_MixLevel: 386ab14a11c91a5499abb5884c65c3d8

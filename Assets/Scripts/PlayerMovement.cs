@@ -17,6 +17,11 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     public static Vector3 playerPosition;
 
+    private void Awake()
+    {
+        PlayerHealth.onPlayerDeath += OnPlayerDeath;
+    }
+
     void Start()
     {
         controls = GetComponent<CharacterController>();
@@ -57,5 +62,10 @@ public class PlayerMovement : MonoBehaviour
 
   
         anim.SetBool("isWalking", x != 0 || z != 0);
+    }
+
+    void OnPlayerDeath()
+    {
+        speed /= 6;
     }
 }

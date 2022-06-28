@@ -24,7 +24,6 @@ public class Gun : MonoBehaviour
     private float nextTimeToFire = 0f;
     int ammoInGun;
     bool isReloading = false;
-    int ammoInventory;
 
     ParticleSystem muzzleFlash;
     private Animator anim;
@@ -32,22 +31,24 @@ public class Gun : MonoBehaviour
     [SerializeField] Camera fpsCam;
     [SerializeField] Animator flashAnim;
 
+    bool dead;
+
+    private void Awake()
+    {
+        PlayerHealth.onPlayerDeath += OnPlayerDeath;
+    }
 
     private void Start()
     {
-        currentWeapon = weapon;
-        ammoInventory = maxAmmoInventory;
+        currentWeapon = settings.weapon;
 
-        int ammo = Mathf.Clamp(currentWeapon.magSize, 0, ammoInventory);
-        ammoInGun += ammo;
-        ammoInventory -= ammo;
+        ammoInGun = currentWeapon.magSize;
 
         Instantiate(currentWeapon.prefab, gameObject.transform);
 
         anim = GetComponent<Animator>();
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
-        gunOrigin = GameObject.Find("GunOrigin").transform;
-
+        gunOrigin = GameObject.FindWithTag("GunOrigin").transform;
     }
 
     void Update()
@@ -57,30 +58,32 @@ public class Gun : MonoBehaviour
         if(value > AUDMIN){
           masterMixer.SetFloat(audType, value/AUDMOD);
         }
-        if (Input.GetButton("Fire1"))
+        
+        if(gunOrigin == null)
         {
-            if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
+            gunOrigin = GameObject.FindWithTag("GunOrigin").transform;
+        }
+
+        if (!dead)
+        {
+            if (Input.GetButton("Fire1"))
             {
-                nextTimeToFire = Time.time + 1f / currentWeapon.fireRate;
-                Shoot();
-            }
-            else if(Time.time >= nextTimeToFire && ammoInGun <= 0 && !isReloading)
-            {
-                if(ammoInventory > 0)
+                if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
+                {
+                    nextTimeToFire = Time.time + 1f / currentWeapon.fireRate;
+                    Shoot();
+                }
+                else if (Time.time >= nextTimeToFire && ammoInGun <= 0 && !isReloading)
                 {
                     Reload();
                 }
-                else
-                {
-                    //play empty sfx
-                }
             }
-        }
-        if (Input.GetKey(KeyCode.R) && !isReloading)
-        {
-            if (ammoInGun < currentWeapon.magSize && ammoInventory > 0)
+            if (Input.GetKey(KeyCode.R) && !isReloading)
             {
-                Reload();
+                if (ammoInGun < currentWeapon.magSize)
+                {
+                    Reload();
+                }
             }
         }
     }
@@ -126,19 +129,16 @@ public class Gun : MonoBehaviour
     {
         isReloading = false;
 
-        int reloadAmount = currentWeapon.magSize - ammoInGun;
-        int reloaded = Mathf.Clamp(reloadAmount, 0, ammoInventory);
-        ammoInGun += reloaded;
-        ammoInventory -= reloaded;
-    }
-
-    public void AddAmmo(int amount)
-    {
-        ammoInventory = Mathf.Clamp(ammoInventory + amount, 0, maxAmmoInventory);
+        ammoInGun = currentWeapon.magSize;
     }
 
     Vector3 Direction(Vector3 from, Vector3 to)
     {
         return (from-to).normalized;
+    }
+
+    void OnPlayerDeath()
+    {
+        dead = true;
     }
 }
