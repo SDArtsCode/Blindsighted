@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Gun : MonoBehaviour
 {
+    const string audType = "Lowpass";
+    const float AUDMAX = 22000f;
+    const float AUDMIN = 1000f;
+    const float AUDMOD = 1.005f;
+
     [SerializeField] private Weapon weapon;
     public static Weapon currentWeapon;
+    public AudioMixer masterMixer;
 
     [SerializeField] int maxAmmoInventory;
     [SerializeField] GameObject bullet;
@@ -45,6 +52,12 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        float value;
+        masterMixer.GetFloat(audType, out value);
+        print(value);
+        if(value > AUDMIN){
+          masterMixer.SetFloat(audType, value/AUDMOD);
+        }
         if (Input.GetButton("Fire1"))
         {
             if (Time.time >= nextTimeToFire && ammoInGun > 0 && !isReloading)
@@ -79,6 +92,7 @@ public class Gun : MonoBehaviour
         anim.SetTrigger("Fire");
 
         muzzleFlash.Play();
+        masterMixer.SetFloat(audType, AUDMAX);
         flashAnim.SetTrigger("Flash");
         AudioManager.instance.Play(currentWeapon.soundEffect);
 
@@ -106,7 +120,7 @@ public class Gun : MonoBehaviour
 
         anim.SetTrigger("Reload");
         anim.speed = currentWeapon.reloadMultiplier;
-        AudioManager.instance.Play("GunReload");   
+        AudioManager.instance.Play("GunReload");
     }
 
     public void ReloadFinished()
