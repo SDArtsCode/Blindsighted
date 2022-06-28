@@ -54,7 +54,6 @@ public class Gun : MonoBehaviour
     {
         float value;
         masterMixer.GetFloat(audType, out value);
-        print(value);
         if(value > AUDMIN){
           masterMixer.SetFloat(audType, value/AUDMOD);
         }
