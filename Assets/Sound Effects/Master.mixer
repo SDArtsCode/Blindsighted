@@ -15,35 +15,18 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 5908542536069651504}
+  - {fileID: 5068485364786851321}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
---- !u!244 &-4692991485847458237
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 22d22a9f1deec594183d05ee5a9c4b48
-  m_EffectName: Lowpass
-  m_MixLevel: 223a0aa8624eb7a42bb4d6703785a080
-  m_Parameters:
-  - m_ParameterName: Cutoff freq
-    m_GUID: 06bc98fa6242b654e9120fda17f30dc3
-  - m_ParameterName: Resonance
-    m_GUID: c1385b38ebbf9dc4aaaf14b30b452cfa
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!244 &-4198180295937969552
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: e6ff98dfbbf896442b588cf40e3252ac
   m_EffectName: Attenuation
   m_MixLevel: 3b6b46c07ad26d54a98f825b24f6c764
@@ -57,7 +40,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: fcdbb0a03c7543b4bae7565b00e05ee7
   m_EffectName: Attenuation
   m_MixLevel: 204b616e97173094c98a3e01086bc724
@@ -85,10 +68,10 @@ AudioMixerController:
     name: AmbienceVolume
   - guid: 9b1e1907efd32b243822937537ae3620
     name: MasterVolume
-  - guid: 06bc98fa6242b654e9120fda17f30dc3
-    name: LowpassFrequency
   - guid: 260cafb51493ebc4d86820234e6ccf57
     name: MusicVolume
+  - guid: 812402d28cd04314db016315d39f7e0a
+    name: Lowpass
   - guid: cf881232359c7874fbfe56853de1e71d
     name: SFXVolume
   m_AudioMixerGroupViews:
@@ -118,7 +101,6 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
-  - {fileID: -4692991485847458237}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -129,7 +111,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: 168f3356aff44744fa56677e1d348e8c
   m_EffectName: Attenuation
   m_MixLevel: 787c752506ec3cb49abe6f7a0593ed1d
@@ -147,12 +129,35 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 05c9a4abb6d3c084fbb9abb350e95364
   m_FloatValues:
-    9b1e1907efd32b243822937537ae3620: 3.2036507
+    812402d28cd04314db016315d39f7e0a: 22000
+    9b1e1907efd32b243822937537ae3620: 0
     c1385b38ebbf9dc4aaaf14b30b452cfa: 1
+    a0d7444987ea33f4aaa431b8023892ee: 1602
+    7b44ead99700d764381d0714d66476d6: 5
     3cfaf24a5f4c18d49bfebd56937bbff3: 429
-    06bc98fa6242b654e9120fda17f30dc3: 6353
-    6e3dfaeb55e194a47b1c8e0cf9e4e532: 0.99160004
+    06bc98fa6242b654e9120fda17f30dc3: 413
+    9abe873c487fe124aaa7c8f6afb1bd9e: 2.71
+    83b8549d237b9364cab578aaf95ee922: 1
+    6cf438ee3ff19d74295cae8a5a953e2d: 0.31
   m_TransitionOverrides: {}
+--- !u!244 &5068485364786851321
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name:
+  m_EffectID: 7862d421cad94e14b9680af9c1f45f00
+  m_EffectName: Lowpass
+  m_MixLevel: 47cbd7dc0fb15364a98598e86f701d74
+  m_Parameters:
+  - m_ParameterName: Cutoff freq
+    m_GUID: 812402d28cd04314db016315d39f7e0a
+  - m_ParameterName: Resonance
+    m_GUID: b2c18634d3bdaf145b9dd23fc1c26d30
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &5070549646442397417
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -178,7 +183,7 @@ AudioMixerEffectController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: 64431a89bdc21dc42a8cb7e162b0b6b8
   m_EffectName: Attenuation
   m_MixLevel: 386ab14a11c91a5499abb5884c65c3d8
